@@ -13,5 +13,7 @@ Task.propTypes = {
   TaskName: PropTypes.string.isRequired,
   TaskDescription: PropTypes.string.isRequired,
   TaskDate: PropTypes.string.isRequired,
+  TaskProject: PropTypes.string.isRequired,
+  TaskResponsible: PropTypes.array.isRequired,
 }
 export default Task;
