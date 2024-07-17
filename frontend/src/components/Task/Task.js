@@ -1,19 +1,14 @@
+// src/components/Task/Task.js
+
 import React from 'react';
-import PropTypes from 'prop-types';
-import { WithLightbox } from '../Common';
-const Task = (props) => {
-  const { task } = props;
+import './Task.css';
+
+function Task() {
   return (
-    <div className='task'>
-		<p>TASK</p>
+    <div className="task">
+      <p>Task</p>
     </div>
   );
 }
-Task.propTypes = {
-  TaskName: PropTypes.string.isRequired,
-  TaskDescription: PropTypes.string.isRequired,
-  TaskDate: PropTypes.string.isRequired,
-  TaskProject: PropTypes.string.isRequired,
-  TaskResponsible: PropTypes.array.isRequired,
-}
+
 export default Task;

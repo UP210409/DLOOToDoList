@@ -1,0 +1,51 @@
+/* src/components/Task/TaskModal.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 500px;
+    max-width: 90%;
+  }
+  
+  .modal-content h2 {
+    margin-top: 0;
+  }
+  
+  .modal-content input,
+  .modal-content textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .modal-selects {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .modal-selects div {
+    width: 48%;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
