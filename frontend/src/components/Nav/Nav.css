@@ -1,3 +1,27 @@
-navbar li ul {
-    cursor: 'pointer';
-  }
+/* src/components/Nav/Nav.css */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo h1 {
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+.add-task,
+.filter-task {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
