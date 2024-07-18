@@ -14,8 +14,8 @@ function Task({ task, onDelete, onComplete }) {
           onChange={() => onComplete(task.id)}
         />
       </div>
-      <div className="task-content">
-        {task.content}
+      <div className="task-name">
+        {task.name}
       </div>
     </div>
   );
