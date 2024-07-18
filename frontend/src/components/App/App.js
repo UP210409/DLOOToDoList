@@ -9,6 +9,7 @@ import FilterMenu from '../Filter/FilterMenu';
 import './App.css';
 
 function App() {
+  const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
 
@@ -21,8 +22,17 @@ function App() {
   };
 
   const handleSaveTask = (task) => {
-    console.log('Task saved:', task);
-    // Aquí puedes agregar la lógica para guardar la tarea
+    const newStatus = determineStatus(task.date);
+    setTasks([...tasks, { ...task, id: tasks.length + 1, completed: false, status: newStatus }]);
+    setIsModalOpen(false);
+  };
+
+  const handleDeleteTask = (taskId) => {
+    setTasks(tasks.filter(task => task.id !== taskId));
+  };
+
+  const handleCompleteTask = (taskId) => {
+    setTasks(tasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task));
   };
 
   const handleFilterTasks = () => {
@@ -38,6 +48,16 @@ function App() {
     // Aquí puedes agregar la lógica para aplicar los filtros
   };
 
+  const determineStatus = (date) => {
+    const today = new Date();
+    const taskDate = new Date(date);
+
+    if (taskDate < today) return 'conRetraso';
+    if (taskDate.toDateString() === today.toDateString()) return 'hoy';
+    if (taskDate.toDateString() === new Date(today.setDate(today.getDate() + 1)).toDateString()) return 'manana';
+    return 'siguienteSemana';
+  };
+
   return (
     <div className="app-container">
       <div className="sidebar">
@@ -45,7 +65,11 @@ function App() {
       </div>
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
-        <Main />
+        <Main 
+          tasks={tasks} 
+          onDeleteTask={handleDeleteTask} 
+          onCompleteTask={handleCompleteTask} 
+        />
       </div>
       <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSaveTask} />
       <FilterMenu isOpen={isFilterMenuOpen} onClose={handleCloseFilterMenu} onFilter={handleApplyFilter} />

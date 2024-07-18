@@ -3,10 +3,20 @@
 import React from 'react';
 import './Task.css';
 
-function Task() {
+function Task({ task, onDelete, onComplete }) {
   return (
     <div className="task">
-      <p>Task</p>
+      <div className="task-header">
+        <span className="delete-task" onClick={() => onDelete(task.id)}>✕</span>
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => onComplete(task.id)}
+        />
+      </div>
+      <div className="task-content">
+        {task.content}
+      </div>
     </div>
   );
 }
