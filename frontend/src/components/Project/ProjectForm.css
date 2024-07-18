@@ -1,0 +1,49 @@
+/* src/components/Project/ProjectForm.css */
+
+.project-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .project-form-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    max-width: 90%;
+  }
+  
+  .project-form-content h2 {
+    margin-top: 0;
+  }
+  
+  .project-form-content div {
+    margin-bottom: 10px;
+  }
+  
+  .project-form-content label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .project-form-content input,
+  .project-form-content textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .project-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
