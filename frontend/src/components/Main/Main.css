@@ -1,18 +1,19 @@
 /* src/components/Main/Main.css */
-
 .main {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
 }
 
-.task-column {
+.status-column {
   flex: 1;
-  margin: 0 10px;
+  border-right: 1px solid #ccc;
+  padding: 0 10px;
 }
 
-.task-column h2 {
-  text-align: center;
-  font-size: 18px;
-  margin-bottom: 10px;
+.status-column:last-child {
+  border-right: none;
+}
+
+.status-column h3 {
+  text-align: center;
 }
