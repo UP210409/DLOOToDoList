@@ -18,20 +18,19 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> getTask() {
+    public List<Task> getTasks() {
         return taskRepository.findAll();
     }
 
     public Optional<Task> getTask(Long id) {
-        return taskRepository.findById(id);    }
-    
-    public void eliminar(Long id) {
+        return taskRepository.findById(id);
+    }
+
+    public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
 
-    public void guardar(Task task) {
-        taskRepository.save(task);  // Altas y Cambios
-}
-
-    
+    public void saveTask(Task task) {
+        taskRepository.save(task);
+    }
 }
