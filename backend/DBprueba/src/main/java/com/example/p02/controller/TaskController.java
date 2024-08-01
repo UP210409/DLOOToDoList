@@ -8,15 +8,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import com.example.p02.model.Task;
 import com.example.p02.service.TaskService;
 import jakarta.validation.Valid;
@@ -46,27 +51,20 @@ public class TaskController {
     }
 
     @Operation(summary = "Eliminar una tarea por ID")
-    @GetMapping("/tasks/delete/{id}")
+    @DeleteMapping("/tasks/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/tasks";
     }
 
     @Operation(summary = "Editar una tarea por ID")
-    @GetMapping("/tasks/edit/{id}")
-    public String editTask(@PathVariable Long id, Model model) {
-        Optional<Task> task = taskService.getTask(id);
-        if (task.isPresent()) {
-            model.addAttribute("titulo", "Editar Tarea");
-            model.addAttribute("task", task.get());
-            return "task/form";
-        } else {
-            return "redirect:/tasks";
-        }
+    @PutMapping("/tasks/edit/{id}")
+    public void editTask(@PathVariable Long id, @RequestBody Task model) {
+        taskService.editTask(id, model);
     }
 
     @Operation(summary = "Crear una nueva tarea")
-    @GetMapping("/tasks/new")
+    @PostMapping("/tasks/new")
     public String createTaskForm(Model model) {
         model.addAttribute("titulo", "Nueva Tarea");
         model.addAttribute("task", new Task());
