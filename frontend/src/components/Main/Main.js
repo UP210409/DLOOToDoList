@@ -1,32 +1,57 @@
-import React from 'react';
-import StatusBar from '../StatusBar/StatusBar';
-import Task from '../Task/Task';
+// src/components/Main/Main.js
 
-function Main() {
+import React from 'react';
+import Task from '../Task/Task';
+import './Main.css';
+
+function Main({ tasks, onDeleteTask, onCompleteTask }) {
+  const tasksByStatus = (status) => tasks.filter(task => task.status === status);
+
   return (
     <div className="main">
-      <StatusBar />
-      <div className="task-sections">
-        <div className="task-section">
-          <h2>Con Retraso</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
-        <div className="task-section">
-          <h2>Hoy</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
-        <div className="task-section">
-          <h2>Mañana</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
-        <div className="task-section">
-          <h2>Siguiente semana</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
+      <div className="task-column">
+        <h2>Con Retraso</h2>
+        {tasksByStatus('conRetraso').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
+      </div>
+      <div className="task-column">
+        <h2>Hoy</h2>
+        {tasksByStatus('hoy').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
+      </div>
+      <div className="task-column">
+        <h2>Mañana</h2>
+        {tasksByStatus('manana').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
+      </div>
+      <div className="task-column">
+        <h2>Siguiente semana</h2>
+        {tasksByStatus('siguienteSemana').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
       </div>
     </div>
   );
