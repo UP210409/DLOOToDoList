@@ -1,10 +1,8 @@
 package com.example.p02.config;
-
 import lombok.extern.slf4j.Slf4j;
-import com.example.p03.dto.ErrorDTO;
-import com.example.p03.exception.RuntimeException; //
+import com.example.p02.dto.ErrorDTO;
+import com.example.p02.exception.RuntimeException; //
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
