@@ -1,15 +1,5 @@
--- Base de datos: task
---use TASK;
-
---CREATE TABLE Tasks (
-  --id_task int(10) AUTO_INCREMENT PRIMARY KEY,
-  --task_name varchar(20) NOT NULL,
-  --task_description varchar(100)
---);
-
--- Creación de la base de datos
-CREATE DATABASE IF NOT EXISTS todolist_db;
-USE todolist_db;
+Base de datos: task
+use TASK;
 
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS users (

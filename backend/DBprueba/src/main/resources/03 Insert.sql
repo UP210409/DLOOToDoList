@@ -1,6 +1,4 @@
---use TASK;
--- cambio para que suba insert
-USE todolist_db;
+use TASK;
 
 -- Insertar usuarios
 INSERT INTO users (name, position, email, password) VALUES 
@@ -21,8 +19,7 @@ INSERT INTO tasks (name, description, due_date) VALUES
 ('Task 3', 'Description for Task 3', '2024-08-03'),
 ('Task 4', 'Description for Task 4', '2024-08-04');
 
---end
---cambio para git
+
 -- Asignar usuarios a tareas
 INSERT INTO user_tasks (user_id, task_id) VALUES 
 (1, 1),
