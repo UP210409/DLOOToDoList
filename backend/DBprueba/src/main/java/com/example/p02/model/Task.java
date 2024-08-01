@@ -28,7 +28,4 @@ public class Task {
     @NotEmpty
     private String task_description;
     
-    
-
- 
 }

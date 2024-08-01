@@ -63,33 +63,4 @@ public class TaskController {
   }
 }
 
-  /* 
-  @GetMapping("/form") // "Crear cliente" Boton
-  public String crear(Model model) {
-    String edoCivil[] = { "Soltero", "Casado", "Divorciado" };
-    
-    // List<String> edoCivil= new ArrayList<String>();
-    // edoCivil.add("Soltero");
-    // edoCivil.add("Casado");
-    // edoCivil.add("Divorciado");
-
-    model.addAttribute("titulo", "Formulario new cliente");
-    model.addAttribute("cliente", new Cliente());
-    // model.addAttribute("edoCivil", edoCivil);
-    System.out.println("Dentro de forma");
-    return "form";
-  }
-
-  @PostMapping("/form")   // Enviar
-  public String guardar(@Valid Cliente cliente, BindingResult br, Model model) {
-    if (br.hasErrors()) {
-      model.addAttribute("titulo", "Formulario de cliente");
-      return "form";
-    } // redirige a la pagina /listar guardando los cambios con 'redirect:'
-    clienteService.guardar(cliente);
-    return "redirect:listado";
-  }
- 
-
-
-  */
+  
