@@ -17,10 +17,9 @@ import com.example.p02.service.TaskService;
 import jakarta.validation.Valid;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
 @Tag(name = "Información Usuarios", description = "CRUD de usuarios")
-@RestController
+@Controller
 @RequestMapping("/tasks")
 public class TaskController {
     private final TaskService taskService;
