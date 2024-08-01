@@ -22,7 +22,7 @@ INSERT INTO tasks (name, description, due_date) VALUES
 ('Task 4', 'Description for Task 4', '2024-08-04');
 
 --end
-
+--cambio para git
 -- Asignar usuarios a tareas
 INSERT INTO user_tasks (user_id, task_id) VALUES 
 (1, 1),
