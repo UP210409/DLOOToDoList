@@ -11,18 +11,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import com.example.p02.model.Task;
 import com.example.p02.service.TaskService;
 import jakarta.validation.Valid;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 
-@Tag(name = "Información Usuarios", description = "CRUD de usuarios")
-@RestController
-@RequestMapping("/tasks")
+@Controller
+@Tag(name = "Task", description = "Operaciones relacionadas con las tareas")
 public class TaskController {
+
     private final TaskService taskService;
 
     @Autowired
@@ -30,44 +32,49 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping
-    public String listTasks(Model model) {
-        model.addAttribute("titulo", "Listado de Tareas");
-        model.addAttribute("tasks", taskService.getTasks());
-        return "task/list"; // task/list.html
+    @Operation(summary = "Obtener todas las tareas")
+    @GetMapping("/tasks")
+    public ResponseEntity<List<Task>> listTasks() {
+        List<Task> tasks = taskService.getTasks();
+        return ResponseEntity.ok(tasks);
     }
 
-    @GetMapping("/{id}")
+    @Operation(summary = "Obtener una tarea por ID")
+    @GetMapping("/tasks/{id}")
     public ResponseEntity<Optional<Task>> getTask(@PathVariable Long id) {
         return ResponseEntity.ok(taskService.getTask(id));
     }
 
-    @GetMapping("/delete/{id}")
+    @Operation(summary = "Eliminar una tarea por ID")
+    @GetMapping("/tasks/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
         return "redirect:/tasks";
     }
 
-    @GetMapping("/edit/{id}")
+    @Operation(summary = "Editar una tarea por ID")
+    @GetMapping("/tasks/edit/{id}")
     public String editTask(@PathVariable Long id, Model model) {
         Optional<Task> task = taskService.getTask(id);
         if (task.isPresent()) {
             model.addAttribute("titulo", "Editar Tarea");
             model.addAttribute("task", task.get());
-            return "task/form"; // task/form.html
+            return "task/form";
         } else {
             return "redirect:/tasks";
         }
     }
 
-    @GetMapping("/new")
+    @Operation(summary = "Crear una nueva tarea")
+    @GetMapping("/tasks/new")
     public String createTaskForm(Model model) {
         model.addAttribute("titulo", "Nueva Tarea");
         model.addAttribute("task", new Task());
-        return "task/form"; // task/form.html
+        return "task/form";
     }
 
-    @PostMapping
+    @Operation(summary = "Guardar una tarea")
+    @PostMapping("/tasks")
     public String saveTask(@Valid Task task, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("titulo", "Formulario de Tarea");
