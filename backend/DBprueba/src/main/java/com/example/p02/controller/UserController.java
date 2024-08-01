@@ -25,11 +25,11 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String listUsers(Model model) {
-        model.addAttribute("titulo", "Listado de Usuarios");
-        model.addAttribute("users", userService.getUsers());
-        return "user/list"; // user/list.html
-    }
+    public ResponseEntity<List<User>> listUsers() {
+    List<User> users = userService.getUsers();
+    return ResponseEntity.ok(users);
+}
+
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Optional<User>> getUser(@PathVariable Long id) {
