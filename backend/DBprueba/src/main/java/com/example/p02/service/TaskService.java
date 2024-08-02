@@ -29,9 +29,19 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public void guardar(Task task) {
-        taskRepository.save(task);  // Altas y Cambios
-}
+    public void saveTask(Task task) {
+        taskRepository.save(task);
+    }
 
-    
+    public void editTask(Long id, Task task){
+       Optional<Task> optionalTask = taskRepository.findById(id);
+
+       Task updateTask = optionalTask.get();
+       updateTask.setName(task.getName());
+       updateTask.setDescription(task.getDescription());
+       updateTask.setDueDate(task.getDueDate());
+       updateTask.setCreatedAt(task.getCreatedAt());
+       updateTask.setUpdatedAt(task.getUpdatedAt());
+       taskRepository.save(updateTask);
+    }
 }
