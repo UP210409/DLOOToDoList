@@ -7,7 +7,7 @@ function Nav({ onAddTask, onFilterTasks }) {
   return (
     <div className="nav">
       <div className="logo">
-        <h1>DLOO - To Do App / JM Abogados</h1>
+        <h1>JM Abogados</h1>
       </div>
       <div className="controls">
         <button className="add-task" onClick={onAddTask}>+</button>

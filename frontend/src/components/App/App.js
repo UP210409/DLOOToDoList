@@ -1,7 +1,6 @@
-// src/components/App/App.js
-
 import React, { useState } from 'react';
 import Nav from '../Nav/Nav';
+import Sidebar from '../Sidebar/Sidebar'; // Asegúrate de importar el Sidebar
 import Project from '../Project/Project';
 import Main from '../Main/Main';
 import TaskModal from '../Task/TaskModal';
@@ -60,9 +59,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="sidebar">
-        <Project />
-      </div>
+      <Sidebar /> {/* Asegúrate de incluir el Sidebar aquí */}
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
         <Main 
