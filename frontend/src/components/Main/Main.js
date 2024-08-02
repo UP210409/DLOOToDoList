@@ -1,7 +1,5 @@
-// src/components/Main/Main.js
-
 import React from 'react';
-import Task from '../Task/Task';
+import TaskCard from '../Task/TaskCard';
 import './Main.css';
 
 function Main({ tasks, onDeleteTask, onCompleteTask }) {
@@ -9,10 +7,10 @@ function Main({ tasks, onDeleteTask, onCompleteTask }) {
 
   return (
     <div className="main">
-      <div className="task-column">
-        <h2>Con Retraso</h2>
+      <div className="status-column">
+        <h3>Con Retraso</h3>
         {tasksByStatus('conRetraso').map(task => (
-          <Task 
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
@@ -20,10 +18,10 @@ function Main({ tasks, onDeleteTask, onCompleteTask }) {
           />
         ))}
       </div>
-      <div className="task-column">
-        <h2>Hoy</h2>
+      <div className="status-column">
+        <h3>Hoy</h3>
         {tasksByStatus('hoy').map(task => (
-          <Task 
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
@@ -31,10 +29,10 @@ function Main({ tasks, onDeleteTask, onCompleteTask }) {
           />
         ))}
       </div>
-      <div className="task-column">
-        <h2>Mañana</h2>
+      <div className="status-column">
+        <h3>Mañana</h3>
         {tasksByStatus('manana').map(task => (
-          <Task 
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
@@ -42,10 +40,10 @@ function Main({ tasks, onDeleteTask, onCompleteTask }) {
           />
         ))}
       </div>
-      <div className="task-column">
-        <h2>Siguiente semana</h2>
+      <div className="status-column">
+        <h3>Siguiente Semana</h3>
         {tasksByStatus('siguienteSemana').map(task => (
-          <Task 
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
