@@ -1,35 +1,61 @@
+// src/components/Main/Main.js
 import React from 'react';
-import StatusBar from '../StatusBar/StatusBar';
 import Task from '../Task/Task';
+import './Main.css';
 
-function Main() {
+const Main = ({ tasks, onDeleteTask, onCompleteTask }) => {
+  const getTasksByStatus = (status) => {
+    return tasks.filter(task => task.status === status);
+  };
+
   return (
     <div className="main">
-      <StatusBar />
-      <div className="task-sections">
-        <div className="task-section">
-          <h2>Con Retraso</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
-        <div className="task-section">
-          <h2>Hoy</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
-        <div className="task-section">
-          <h2>Mañana</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
-        <div className="task-section">
-          <h2>Siguiente semana</h2>
-          {/* Tasks*/}
-          <Task />
-        </div>
+      <div className="status-column">
+        <h3>Con Retraso</h3>
+        {getTasksByStatus('conRetraso').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
+      </div>
+      <div className="status-column">
+        <h3>Hoy</h3>
+        {getTasksByStatus('hoy').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
+      </div>
+      <div className="status-column">
+        <h3>Mañana</h3>
+        {getTasksByStatus('manana').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
+      </div>
+      <div className="status-column">
+        <h3>Siguiente Semana</h3>
+        {getTasksByStatus('siguienteSemana').map(task => (
+          <Task 
+            key={task.id} 
+            task={task} 
+            onDelete={onDeleteTask} 
+            onComplete={onCompleteTask} 
+          />
+        ))}
       </div>
     </div>
   );
-}
+};
 
-export default Main;
+export default Main;

@@ -1,19 +1,24 @@
+// src/components/Task/Task.js
+
 import React from 'react';
-import PropTypes from 'prop-types';
-import { WithLightbox } from '../Common';
-const Task = (props) => {
-  const { task } = props;
+import './Task.css';
+
+function Task({ task, onDelete, onComplete }) {
   return (
-    <div className='task'>
-		<p>TASK</p>
+    <div className="task">
+      <div className="task-header">
+        <span className="delete-task" onClick={() => onDelete(task.id)}>✕</span>
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={() => onComplete(task.id)}
+        />
+      </div>
+      <div className="task-name">
+        {task.name}
+      </div>
     </div>
   );
 }
-Task.propTypes = {
-  TaskName: PropTypes.string.isRequired,
-  TaskDescription: PropTypes.string.isRequired,
-  TaskDate: PropTypes.string.isRequired,
-  TaskProject: PropTypes.string.isRequired,
-  TaskResponsible: PropTypes.array.isRequired,
-}
+
 export default Task;

@@ -1,22 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './StatusBar.css';
+// src/components/StatusBar/StatusBar.js
 
-const StatusBar = (props) => {
+import React from 'react';
+
+function StatusBar() {
   return (
-    <div>
-      <h3>{props.title}</h3>
-      <button
-        onClick={props.newObjectFunction}>
-        +
-      </button>
+    <div className="status-bar">
+      {/* Status bar content */}
     </div>
   );
-}
-
-StatusBar.propTypes = {
-  title: PropTypes.string.isRequired,
-  newObjectFunction: PropTypes.any.isRequired
 }
 
 export default StatusBar;
