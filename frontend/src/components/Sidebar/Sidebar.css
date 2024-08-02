@@ -6,6 +6,7 @@
     flex-direction: column;
     height: 100vh;
     width: 250px; /* Ajusta según sea necesario */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   }
   
   .logo {
@@ -33,4 +34,5 @@
     cursor: pointer;
     font-size: 16px;
   }
+  
   
