@@ -30,5 +30,30 @@ public class Task {
     
     
 
+<<<<<<< Updated upstream
  
+=======
+    @Column(name = "due_date")
+    private LocalDate dueDate;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "status")
+    private String status;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+>>>>>>> Stashed changes
 }

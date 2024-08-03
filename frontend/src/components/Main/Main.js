@@ -1,6 +1,19 @@
 import React from 'react';
 import StatusBar from '../StatusBar/StatusBar';
 import Task from '../Task/Task';
+<<<<<<< Updated upstream
+=======
+import './Main.css';
+
+const Main = ({ tasks, onDeleteTask, onCompleteTask }) => {
+  const getTasksByStatus = (status) => {
+    if (!Array.isArray(tasks)) {
+      console.error('Tasks is not an array:', tasks);
+      return [];
+    }
+    return tasks.filter(task => task.status === status);
+  };
+>>>>>>> Stashed changes
 
 function Main() {
   return (
