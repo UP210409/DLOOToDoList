@@ -36,22 +36,22 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getProjects());
     }
 
-    // @PostMapping({"/save"})
-    // @ResponseStatus(HttpStatus.CREATED)
-    // public Task saveTask(@Valid @RequestBody Task data){
-    //     return taskService.saveTask(data);
-    // }
+    @PostMapping({"/save"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public Project saveProject(@Valid @RequestBody Project data){
+        return projectService.saveProject(data);
+    }
 
-    // @PutMapping({"/edit/{id}"})
-    // @ResponseStatus(HttpStatus.NO_CONTENT)
-    // public void editTask(@PathVariable Long id, @Valid @RequestBody Task data){
-    //       taskService.editTask(id, data);
-    // }
+    @PutMapping({"/edit/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ediProject(@PathVariable Long id, @Valid @RequestBody Project data){
+          projectService.editProject(id, data);
+    }
     
-    // @DeleteMapping({"/delete/{id}"})
-    // @ResponseStatus(HttpStatus.NO_CONTENT)
-    // public void deleteTask(@PathVariable Long id){
-    //       taskService.deleteTask(id);
-    // }
+    @DeleteMapping({"/delete/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteProject(@PathVariable Long id){
+          projectService.deleteProject(id);
+    }
     
 }
