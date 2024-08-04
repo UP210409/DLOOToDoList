@@ -1,84 +1,50 @@
 package com.example.p02.controller;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
-import com.example.p02.model.Task;
 import com.example.p02.service.TaskService;
+
 import jakarta.validation.Valid;
 
-@Controller
-@Tag(name = "Task", description = "Operaciones relacionadas con las tareas")
+import java.util.*;
+
+import com.example.p02.model.Task;
+
+@RestController
+@RequestMapping({"/tasks"})
 public class TaskController {
 
     private final TaskService taskService;
 
-    @Autowired
-    public TaskController(TaskService taskService) {
+    public TaskController (@Autowired TaskService taskService){
         this.taskService = taskService;
     }
 
-    @Operation(summary = "Obtener todas las tareas")
-    @GetMapping("/tasks")
-    public ResponseEntity<List<Task>> listTasks() {
-        List<Task> tasks = taskService.getTasks();
-        return ResponseEntity.ok(tasks);
+    @GetMapping({"/all"})
+    public ResponseEntity<List<Task>> getTasks(){
+        return ResponseEntity.ok(taskService.getTasks());
     }
 
-    @Operation(summary = "Obtener una tarea por ID")
-    @GetMapping("/tasks/{id}")
-    public ResponseEntity<Optional<Task>> getTask(@PathVariable Long id) {
-        return ResponseEntity.ok(taskService.getTask(id));
+    @PostMapping({"/save"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public Task saveTask(@Valid @RequestBody Task data){
+        return taskService.saveTask(data);
     }
 
-    @Operation(summary = "Eliminar una tarea por ID")
-    @DeleteMapping("/tasks/delete/{id}")
-    public String deleteTask(@PathVariable Long id) {
-        taskService.deleteTask(id);
-        return "redirect:/tasks";
+    @PutMapping({"/edit/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editTask(@PathVariable Long id, @Valid @RequestBody Task data){
+          taskService.editTask(id, data);
     }
-
-    @Operation(summary = "Editar una tarea por ID")
-    @PutMapping("/tasks/edit/{id}")
-    public void editTask(@PathVariable Long id, @RequestBody Task model) {
-        taskService.editTask(id, model);
-    }
-
-    @Operation(summary = "Crear una nueva tarea")
-    @PostMapping("/tasks/new")
-    public String createTaskForm(Model model) {
-        model.addAttribute("titulo", "Nueva Tarea");
-        model.addAttribute("task", new Task());
-        return "task/form";
-    }
-
-    @Operation(summary = "Guardar una tarea")
-    @PostMapping("/tasks")
-    public String saveTask(@Valid Task task, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("titulo", "Formulario de Tarea");
-            return "task/form";
-        }
-        taskService.saveTask(task);
-        return "redirect:/tasks";
-    }
+    
 }
