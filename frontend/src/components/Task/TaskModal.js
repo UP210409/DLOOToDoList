@@ -1,80 +1,64 @@
-// src/components/Task/TaskModal.js
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 import './TaskModal.css';
 
-const TaskModal = ({ isOpen, onClose, onSave, people, projects }) => {
-  const [task, setTask] = useState({
-    title: '',
-    description: '',
-    dueDate: new Date(),
-    assignedTo: '',
-    project: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setTask(prevState => ({ ...prevState, [name]: value }));
-  };
-
-  const handleDateChange = (date) => {
-    setTask(prevState => ({ ...prevState, dueDate: date }));
-  };
+function TaskModal({ isOpen, onClose, onSave, task }) {
+  const [taskName, setTaskName] = useState(task ? task.name : '');
+  const [taskDescription, setTaskDescription] = useState(task ? task.description : '');
+  const [taskDate, setTaskDate] = useState(task ? new Date(task.date) : new Date());
+  const [taskUsers, setTaskUsers] = useState(task ? task.users : []);
+  const [taskProject, setTaskProject] = useState(task ? task.project : '');
 
   const handleSave = () => {
-    onSave(task);
+    onSave({ name: taskName, description: taskDescription, date: taskDate, users: taskUsers, project: taskProject, status: task ? task.status : 'hoy' });
+    setTaskName('');
+    setTaskDescription('');
+    setTaskDate(new Date());
+    setTaskUsers([]);
+    setTaskProject('');
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="task-modal">
-      <div className="task-modal-content">
-        <h2>Crear Tarea</h2>
-        <input 
-          type="text" 
-          name="title" 
-          placeholder="Nombre de la tarea" 
-          value={task.title} 
-          onChange={handleChange} 
+    <div className="modal-overlay">
+      <div className="modal-content">
+        <h2>{task ? 'Editar Tarea' : 'Crear Tarea'}</h2>
+        <input
+          type="text"
+          placeholder="Nombre"
+          value={taskName}
+          onChange={(e) => setTaskName(e.target.value)}
         />
-        <textarea 
-          name="description" 
-          placeholder="Descripción" 
-          value={task.description} 
-          onChange={handleChange} 
+        <textarea
+          placeholder="Descripción"
+          value={taskDescription}
+          onChange={(e) => setTaskDescription(e.target.value)}
         />
-        <label>Fecha de Vencimiento:</label>
-        <DatePicker 
-          selected={task.dueDate} 
-          onChange={handleDateChange} 
+        <DatePicker
+          selected={taskDate}
+          onChange={(date) => setTaskDate(date)}
         />
-        <label>Asignar a:</label>
-        <select 
-          name="assignedTo" 
-          value={task.assignedTo} 
-          onChange={handleChange} 
-        >
-          {people.map(person => (
-            <option key={person.id} value={person.name}>{person.name}</option>
-          ))}
-        </select>
-        <label>Proyecto:</label>
-        <select 
-          name="project" 
-          value={task.project} 
-          onChange={handleChange} 
-        >
-          {projects.map(project => (
-            <option key={project.id} value={project.name}>{project.name}</option>
-          ))}
-        </select>
-        <button onClick={handleSave}>Crear</button>
-        <button onClick={onClose}>Cancelar</button>
+        <input
+          type="text"
+          placeholder="Usuarios (separados por comas)"
+          value={taskUsers.join(', ')}
+          onChange={(e) => setTaskUsers(e.target.value.split(',').map(user => user.trim()))}
+        />
+        <input
+          type="text"
+          placeholder="Proyecto"
+          value={taskProject}
+          onChange={(e) => setTaskProject(e.target.value)}
+        />
+        <div className="modal-buttons">
+          <button onClick={onClose} className="cancel-button">Cancelar</button>
+          <button onClick={handleSave} className="save-button">{task ? 'Guardar' : 'Crear'}</button>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default TaskModal;
