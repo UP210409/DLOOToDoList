@@ -20,7 +20,7 @@ function FilterMenu({ isOpen, onClose, onFilter }) {
   return (
     <div className="filter-menu-overlay">
       <div className="filter-menu-content">
-        <h2>Sort</h2>
+        <h2>Filtrar según:</h2>
         <div>
           <label>Persona:</label>
           <select value={person} onChange={(e) => setPerson(e.target.value)}>
@@ -38,8 +38,8 @@ function FilterMenu({ isOpen, onClose, onFilter }) {
           </select>
         </div>
         <div className="filter-menu-buttons">
-          <button onClick={onClose}>Cancelar</button>
-          <button onClick={handleFilter}>Aplicar</button>
+          <button className="filter-button cancel" onClick={onClose}>Cancelar</button>
+          <button className="filter-button apply" onClick={handleFilter}>Aplicar</button>
         </div>
       </div>
     </div>

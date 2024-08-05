@@ -1,47 +1,39 @@
-// src/components/Login/Login.js
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // lógica de autenticación
-    // Si la autenticación es exitosa:
-    navigate('/principal'); // Redirigir a la pantalla principal
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Aquí iría tu lógica de autenticación
+    console.log('Login', { email, password });
   };
 
   return (
     <div className="login-container">
-      <div className="login-left">
-        <div className="company-logo">Logo</div>
-        <div className="company-name">JC Romo Abogados</div>
-        <div className="app-name-circle">
-          <div className="app-name">DLOO</div>
-          <div className="app-subtitle">To Do App</div>
-        </div>
-      </div>
-      <div className="login-right">
-        <h2>Inicio de Sesión</h2>
-        <input 
-          type="email" 
-          placeholder="E-mail" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
+      <form className="login-form" onSubmit={handleLogin}>
+        <img src="/path/to/your/logo.png" alt="Logo JM Abogados" className="logo" />
+        <h2>Inicio de sesión</h2>
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
         />
-        <input 
-          type="password" 
-          placeholder="Contraseña" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <button onClick={handleLogin}>Iniciar Sesión</button>
-      </div>
+        <button type="submit">Iniciar sesión</button>
+      </form>
     </div>
   );
 };
 
-export default Login;
+export default Login;
