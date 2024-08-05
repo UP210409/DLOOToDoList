@@ -1,64 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+//src/components/App/App.js
+
+import React, { useState } from 'react';
 import Nav from '../Nav/Nav';
+import Sidebar from '../Sidebar/Sidebar'; // Asegúrate de importar el Sidebar
 import Project from '../Project/Project';
 import Main from '../Main/Main';
 import TaskModal from '../Task/TaskModal';
 import FilterMenu from '../Filter/FilterMenu';
-import Login from '../Login/Login';
 import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
-  const [user, setUser] = useState({ name: 'Usuario' });
-
-  const people = [
-    { id: 1, name: 'Persona 1' },
-    { id: 2, name: 'Persona 2' }
-  ];
-
-  const projects = [
-    { id: 1, name: 'Proyecto 1' },
-    { id: 2, name: 'Proyecto 2' }
-  ];
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
-    try {
-      const response = await fetch('http://localhost:8080/api/tasks');
-      const data = await response.json();
-      setTasks(data);
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
-
-  const fetchTasksByPerson = async (personId) => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/tasks/user/${personId}`);
-      const data = await response.json();
-      setTasks(data);
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
-
-  const fetchTasksByProject = async (projectId) => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/tasks/project/${projectId}`);
-      const data = await response.json();
-      setTasks(data);
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
+  const [taskToEdit, setTaskToEdit] = useState(null); // Para editar tareas
 
   const handleAddTask = () => {
+    setTaskToEdit(null); // Para crear una nueva tarea
     setIsModalOpen(true);
   };
 
@@ -67,8 +25,14 @@ function App() {
   };
 
   const handleSaveTask = (task) => {
-    const newStatus = determineStatus(task.dueDate);
-    setTasks([...tasks, { ...task, id: tasks.length + 1, completed: false, status: newStatus }]);
+    if (taskToEdit) {
+      // Editar tarea existente
+      setTasks(tasks.map(t => t.id === taskToEdit.id ? { ...task, id: t.id, completed: t.completed, status: determineStatus(task.date) } : t));
+    } else {
+      // Crear nueva tarea
+      const newStatus = determineStatus(task.date);
+      setTasks([...tasks, { ...task, id: tasks.length + 1, completed: false, status: newStatus }]);
+    }
     setIsModalOpen(false);
   };
 
@@ -80,6 +44,12 @@ function App() {
     setTasks(tasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task));
   };
 
+  const handleEditTask = (taskId) => {
+    const task = tasks.find(t => t.id === taskId);
+    setTaskToEdit(task);
+    setIsModalOpen(true);
+  };
+
   const handleFilterTasks = () => {
     setIsFilterMenuOpen(true);
   };
@@ -89,13 +59,8 @@ function App() {
   };
 
   const handleApplyFilter = (filters) => {
-    if (filters.personId) {
-      fetchTasksByPerson(filters.personId);
-    } else if (filters.projectId) {
-      fetchTasksByProject(filters.projectId);
-    } else {
-      fetchTasks();
-    }
+    console.log('Filters applied:', filters);
+    // Aquí puedes agregar la lógica para aplicar los filtros
   };
 
   const determineStatus = (date) => {
@@ -108,40 +73,30 @@ function App() {
     return 'siguienteSemana';
   };
 
-  const Principal = () => (
+  return (
     <div className="app-container">
-      <div className="sidebar">
-        <div className="user-info">
-          <h2>{user.name}</h2>
-        </div>
-        <Project />
-      </div>
+      <Sidebar /> {/* Asegúrate de incluir el Sidebar aquí */}
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
         <Main 
           tasks={tasks} 
           onDeleteTask={handleDeleteTask} 
           onCompleteTask={handleCompleteTask} 
+          onEditTask={handleEditTask} // Pasar la función para editar tareas
         />
       </div>
       <TaskModal 
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
         onSave={handleSaveTask} 
-        people={people} 
-        projects={projects} 
+        task={taskToEdit} // Pasar la tarea a editar
       />
-      <FilterMenu isOpen={isFilterMenuOpen} onClose={handleCloseFilterMenu} onFilter={handleApplyFilter} />
+      <FilterMenu 
+        isOpen={isFilterMenuOpen} 
+        onClose={handleCloseFilterMenu} 
+        onFilter={handleApplyFilter} 
+      />
     </div>
-  );
-
-  return (
-    <Router>
-      <Routes>
-        <Route path="/principal" element={<Principal />} />
-        <Route path="/" element={<Login />} />
-      </Routes>
-    </Router>
   );
 }
 

@@ -1,32 +1,47 @@
-/* src/components/App/App.css */
+:root {
+  --primary-color: #2c3d4e; /* Azul oscuro */
+  --secondary-color: #00d084; /* Azul claro */
+  --background-color: #F5F5F5; /* Gris claro */
+  --text-color: #333333; /* Gris oscuro */
+}
 
 .app-container {
   display: flex;
   height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
 }
+
 .sidebar {
-  width: 200px;
-  background-color: #f8f9fa;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  width: 250px;
+  background-color: var(--primary-color);
+  color: white;
   padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .main-content {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-
-.nav {
-  background-color: #fff;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.main {
-  flex-grow: 1;
+  flex: 1;
   padding: 20px;
-  background-color: #f9f9f9;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: var(--primary-color);
+}
+
+.header img {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.header h1 {
+  color: white;
+}
+
+.App {
+  display: flex;
 }
