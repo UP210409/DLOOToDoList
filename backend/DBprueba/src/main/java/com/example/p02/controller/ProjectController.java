@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.p02.service.ProjectService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 import java.util.*;
@@ -30,24 +31,28 @@ public class ProjectController {
     public ProjectController (@Autowired ProjectService projectService){
         this.projectService = projectService;
     }
-
+    
+    @Operation(summary = "Mostrar todos los proyectos")
     @GetMapping({"/all"})
     public ResponseEntity<List<Project>> getProjects(){
         return ResponseEntity.ok(projectService.getProjects());
     }
 
+    @Operation(summary = "Crear un nuevo proyecto")
     @PostMapping({"/save"})
     @ResponseStatus(HttpStatus.CREATED)
     public Project saveProject(@Valid @RequestBody Project data){
         return projectService.saveProject(data);
     }
-
+    
+    @Operation(summary = "Editar un proyecto")
     @PutMapping({"/edit/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void ediProject(@PathVariable Long id, @Valid @RequestBody Project data){
           projectService.editProject(id, data);
     }
     
+    @Operation(summary = "Eliminar un proyecto")
     @DeleteMapping({"/delete/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProject(@PathVariable Long id){
