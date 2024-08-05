@@ -1,61 +1,64 @@
 // src/components/Main/Main.js
+
 import React from 'react';
-import Task from '../Task/Task';
+import TaskCard from '../Task/TaskCard';
 import './Main.css';
 
-const Main = ({ tasks, onDeleteTask, onCompleteTask }) => {
-  const getTasksByStatus = (status) => {
-    return tasks.filter(task => task.status === status);
-  };
+function Main({ tasks, onDeleteTask, onCompleteTask, onEditTask }) {
+  const tasksByStatus = (status) => tasks.filter(task => task.status === status);
 
   return (
     <div className="main">
       <div className="status-column">
         <h3>Con Retraso</h3>
-        {getTasksByStatus('conRetraso').map(task => (
-          <Task 
+        {tasksByStatus('conRetraso').map(task => (
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
             onComplete={onCompleteTask} 
+            onEdit={onEditTask} // Pasar la función para editar tareas
           />
         ))}
       </div>
       <div className="status-column">
         <h3>Hoy</h3>
-        {getTasksByStatus('hoy').map(task => (
-          <Task 
+        {tasksByStatus('hoy').map(task => (
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
             onComplete={onCompleteTask} 
+            onEdit={onEditTask} // Pasar la función para editar tareas
           />
         ))}
       </div>
       <div className="status-column">
         <h3>Mañana</h3>
-        {getTasksByStatus('manana').map(task => (
-          <Task 
+        {tasksByStatus('manana').map(task => (
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
             onComplete={onCompleteTask} 
+            onEdit={onEditTask} // Pasar la función para editar tareas
           />
         ))}
       </div>
       <div className="status-column">
         <h3>Siguiente Semana</h3>
-        {getTasksByStatus('siguienteSemana').map(task => (
-          <Task 
+        {tasksByStatus('siguienteSemana').map(task => (
+          <TaskCard 
             key={task.id} 
             task={task} 
             onDelete={onDeleteTask} 
             onComplete={onCompleteTask} 
+            onEdit={onEditTask} // Pasar la función para editar tareas
           />
         ))}
       </div>
     </div>
   );
-};
+}
 
-export default Main;
+export default Main;
