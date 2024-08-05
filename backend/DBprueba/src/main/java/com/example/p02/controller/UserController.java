@@ -39,7 +39,7 @@ public class UserController {
         userService.editUser(id, data);
     }
 
-    @PostMapping("/save")
+    @PostMapping({"/save"})
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@Valid @RequestBody User data){
         return userService.saveUser(data);
