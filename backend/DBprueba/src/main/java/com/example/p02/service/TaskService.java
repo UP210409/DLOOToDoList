@@ -46,4 +46,8 @@ public class TaskService {
 
     taskRepository.save(task);
     }
+
+    public Optional<Task> getTaskById(Long id) {
+        return taskRepository.findById(id); 
+    }
 }
