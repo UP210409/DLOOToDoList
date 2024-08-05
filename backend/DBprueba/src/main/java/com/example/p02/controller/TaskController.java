@@ -31,9 +31,15 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping({"/all"})
+    @GetMapping
     public ResponseEntity<List<Task>> getTasks(){
         return ResponseEntity.ok(taskService.getTasks());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+        Optional<Task> task = taskService.getTaskById(id);
+        return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PostMapping({"/save"})
