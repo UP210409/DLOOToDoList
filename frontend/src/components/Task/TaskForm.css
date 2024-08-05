@@ -1,0 +1,61 @@
+/* src/components/Task/TaskForm.css */
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .task-form h2 {
+    margin-top: 0;
+  }
+  
+  .task-form input,
+  .task-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .select-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .select-group label {
+    font-weight: bold;
+  }
+  
+  .select-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .task-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .cancel-button {
+    background-color: #f44336; /* Rojo para cancelar */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .save-button {
+    background-color: #00d084; /* Verde para guardar */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
