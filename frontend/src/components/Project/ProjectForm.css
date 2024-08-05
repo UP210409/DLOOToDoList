@@ -1,49 +1,74 @@
 /* src/components/Project/ProjectForm.css */
 
 .project-form-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .project-form-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-    max-width: 90%;
-  }
-  
-  .project-form-content h2 {
-    margin-top: 0;
-  }
-  
-  .project-form-content div {
-    margin-bottom: 10px;
-  }
-  
-  .project-form-content label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .project-form-content input,
-  .project-form-content textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .project-form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-form-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  max-width: 90%;
+}
+
+.project-form-content h2 {
+  margin-top: 0;
+  color: black; /* Cambia el color del título a negro */
+}
+
+.project-form-content div {
+  margin-bottom: 10px;
+}
+
+.project-form-content label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.project-form-content input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.project-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-button {
+  background-color: red; /* Color para el botón de cancelar */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #00d084; /* Color para el botón de guardar */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: darkred; /* Color de hover para el botón de cancelar */
+}
+
+.save-button:hover {
+  background-color: #00a873; /* Color de hover para el botón de guardar */
+}
