@@ -1,9 +1,9 @@
-//src/components/App/App.js
+// src/components/App/App.js
 
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Nav from '../Nav/Nav';
-import Sidebar from '../Sidebar/Sidebar'; // Asegúrate de importar el Sidebar
+import Sidebar from '../Sidebar/Sidebar'; 
 import Project from '../Project/Project';
 import Main from '../Main/Main';
 import TaskModal from '../Task/TaskModal';
@@ -13,20 +13,22 @@ import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
-  const [taskToEdit, setTaskToEdit] = useState(null); // Para editar tareas
+  const [taskToEdit, setTaskToEdit] = useState(null);
 
   useEffect(() => {
     fetchTasks();
+    fetchUsers();
+    fetchProjects();
   }, []);
 
   const fetchTasks = async () => {
     try {
       const response = await fetch('http://localhost:8080/tasks');
       const data = await response.json();
-      console.log(data);
-      // Add status to each task
       const tasksWithStatus = data.map(task => ({
         ...task,
         status: determineStatus(task.dueDate)
@@ -34,6 +36,26 @@ function App() {
       setTasks(tasksWithStatus);
     } catch (error) {
       console.error('Error fetching tasks:', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/users');
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/projects');
+      const data = await response.json();
+      setProjects(data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
     }
   };
 
@@ -47,7 +69,7 @@ function App() {
       }));
       setTasks(tasksWithStatus);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error('Error fetching tasks by person:', error);
     }
   };
 
@@ -61,12 +83,12 @@ function App() {
       }));
       setTasks(tasksWithStatus);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error('Error fetching tasks by project:', error);
     }
   };
 
   const handleAddTask = () => {
-    setTaskToEdit(null); // Para crear una nueva tarea
+    setTaskToEdit(null);
     setIsModalOpen(true);
   };
 
@@ -116,9 +138,6 @@ function App() {
     const today = new Date();
     const taskDate = new Date(date);
 
-    console.log('Task Date:', taskDate);
-    console.log('Today Date:', today);
-
     if (taskDate < today) return 'conRetraso';
     if (taskDate.toDateString() === today.toDateString()) return 'hoy';
     if (taskDate.toDateString() === new Date(today.setDate(today.getDate() + 1)).toDateString()) return 'manana';
@@ -127,26 +146,28 @@ function App() {
 
   const Principal = () => (
     <div className="app-container">
-      <Sidebar /> {/* Asegúrate de incluir el Sidebar aquí */}
+      <Sidebar />
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
         <Main 
           tasks={tasks} 
           onDeleteTask={handleDeleteTask} 
           onCompleteTask={handleCompleteTask} 
-          onEditTask={handleEditTask} // Pasar la función para editar tareas
+          onEditTask={handleEditTask} 
         />
       </div>
       <TaskModal 
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
         onSave={handleSaveTask} 
-        task={taskToEdit} // Pasar la tarea a editar
+        task={taskToEdit} 
       />
       <FilterMenu 
         isOpen={isFilterMenuOpen} 
         onClose={handleCloseFilterMenu} 
         onFilter={handleApplyFilter} 
+        users={users} 
+        projects={projects} 
       />
     </div>
   );
