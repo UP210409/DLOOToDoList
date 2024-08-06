@@ -13,51 +13,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.p02.service.TaskService;
+import com.example.p02.service.ProjectService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 import java.util.*;
 
-import com.example.p02.model.Task;
+import com.example.p02.model.Project;
 
 @RestController
-@RequestMapping({"/tasks"})
-public class TaskController {
+@RequestMapping({"/projects"})
+public class ProjectController {
 
-    private final TaskService taskService;
+    private final ProjectService projectService;
 
-    public TaskController (@Autowired TaskService taskService){
-        this.taskService = taskService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Task>> getTasks(){
-        return ResponseEntity.ok(taskService.getTasks());
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        Optional<Task> task = taskService.getTaskById(id);
-        return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-    }
-
-    @PostMapping({"/save"})
-    @ResponseStatus(HttpStatus.CREATED)
-    public Task saveTask(@Valid @RequestBody Task data){
-        return taskService.saveTask(data);
-    }
-
-    @PutMapping({"/edit/{id}"})
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void editTask(@PathVariable Long id, @Valid @RequestBody Task data){
-          taskService.editTask(id, data);
+    public ProjectController (@Autowired ProjectService projectService){
+        this.projectService = projectService;
     }
     
+    @Operation(summary = "Mostrar todos los proyectos")
+    @GetMapping({"/all"})
+    public ResponseEntity<List<Project>> getProjects(){
+        return ResponseEntity.ok(projectService.getProjects());
+    }
+
+    @Operation(summary = "Crear un nuevo proyecto")
+    @PostMapping({"/save"})
+    @ResponseStatus(HttpStatus.CREATED)
+    public Project saveProject(@Valid @RequestBody Project data){
+        return projectService.saveProject(data);
+    }
+    
+    @Operation(summary = "Editar un proyecto")
+    @PutMapping({"/edit/{id}"})
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void ediProject(@PathVariable Long id, @Valid @RequestBody Project data){
+          projectService.editProject(id, data);
+    }
+    
+    @Operation(summary = "Eliminar un proyecto")
     @DeleteMapping({"/delete/{id}"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTask(@PathVariable Long id){
-          taskService.deleteTask(id);
+    public void deleteProject(@PathVariable Long id){
+          projectService.deleteProject(id);
     }
     
 }

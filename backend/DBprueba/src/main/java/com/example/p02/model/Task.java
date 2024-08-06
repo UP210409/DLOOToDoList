@@ -7,6 +7,8 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Data
 @Entity
 @Table(name = "tasks")
@@ -24,22 +26,25 @@ public class Task {
     private String description;
 
     @Column(name = "due_date")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate createdAt;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate updatedAt;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        createdAt = LocalDate.now();
+        updatedAt = LocalDate.now();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        updatedAt = LocalDate.now();
     }
 }
