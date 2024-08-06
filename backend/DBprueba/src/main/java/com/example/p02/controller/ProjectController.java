@@ -40,7 +40,7 @@ public class ProjectController {
     }
     
     @Operation(summary = "Mostrar todos los proyectos")
-    @GetMapping({"/all"})
+    @GetMapping
     public ResponseEntity<List<Project>> getProjects(){
         return ResponseEntity.ok(projectService.getProjects());
     }
