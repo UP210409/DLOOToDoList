@@ -1,19 +1,94 @@
 // src/components/App/App.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Nav from '../Nav/Nav';
+import Sidebar from '../Sidebar/Sidebar'; 
 import Project from '../Project/Project';
 import Main from '../Main/Main';
 import TaskModal from '../Task/TaskModal';
 import FilterMenu from '../Filter/FilterMenu';
+import Login from '../Login/Login';
 import './App.css';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
+
+  useEffect(() => {
+    fetchTasks();
+    fetchUsers();
+    fetchProjects();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/tasks');
+      const data = await response.json();
+      const tasksWithStatus = data.map(task => ({
+        ...task,
+        status: determineStatus(task.dueDate)
+      }));
+      setTasks(tasksWithStatus);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/users');
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/projects');
+      const data = await response.json();
+      setProjects(data);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  };
+
+  const fetchTasksByPerson = async (personId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/tasks/user/${personId}`);
+      const data = await response.json();
+      const tasksWithStatus = data.map(task => ({
+        ...task,
+        status: determineStatus(task.dueDate)
+      }));
+      setTasks(tasksWithStatus);
+    } catch (error) {
+      console.error('Error fetching tasks by person:', error);
+    }
+  };
+
+  const fetchTasksByProject = async (projectId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/tasks/project/${projectId}`);
+      const data = await response.json();
+      const tasksWithStatus = data.map(task => ({
+        ...task,
+        status: determineStatus(task.dueDate)
+      }));
+      setTasks(tasksWithStatus);
+    } catch (error) {
+      console.error('Error fetching tasks by project:', error);
+    }
+  };
 
   const handleAddTask = () => {
+    setTaskToEdit(null);
     setIsModalOpen(true);
   };
 
@@ -22,7 +97,7 @@ function App() {
   };
 
   const handleSaveTask = (task) => {
-    const newStatus = determineStatus(task.date);
+    const newStatus = determineStatus(task.dueDate);
     setTasks([...tasks, { ...task, id: tasks.length + 1, completed: false, status: newStatus }]);
     setIsModalOpen(false);
   };
@@ -35,6 +110,12 @@ function App() {
     setTasks(tasks.map(task => task.id === taskId ? { ...task, completed: !task.completed } : task));
   };
 
+  const handleEditTask = (taskId) => {
+    const task = tasks.find(t => t.id === taskId);
+    setTaskToEdit(task);
+    setIsModalOpen(true);
+  };
+
   const handleFilterTasks = () => {
     setIsFilterMenuOpen(true);
   };
@@ -44,8 +125,13 @@ function App() {
   };
 
   const handleApplyFilter = (filters) => {
-    console.log('Filters applied:', filters);
-    // Aquí puedes agregar la lógica para aplicar los filtros
+    if (filters.personId) {
+      fetchTasksByPerson(filters.personId);
+    } else if (filters.projectId) {
+      fetchTasksByProject(filters.projectId);
+    } else {
+      fetchTasks();
+    }
   };
 
   const determineStatus = (date) => {
@@ -58,22 +144,41 @@ function App() {
     return 'siguienteSemana';
   };
 
-  return (
+  const Principal = () => (
     <div className="app-container">
-      <div className="sidebar">
-        <Project />
-      </div>
+      <Sidebar />
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
         <Main 
           tasks={tasks} 
           onDeleteTask={handleDeleteTask} 
           onCompleteTask={handleCompleteTask} 
+          onEditTask={handleEditTask} 
         />
       </div>
-      <TaskModal isOpen={isModalOpen} onClose={handleCloseModal} onSave={handleSaveTask} />
-      <FilterMenu isOpen={isFilterMenuOpen} onClose={handleCloseFilterMenu} onFilter={handleApplyFilter} />
+      <TaskModal 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+        onSave={handleSaveTask} 
+        task={taskToEdit} 
+      />
+      <FilterMenu 
+        isOpen={isFilterMenuOpen} 
+        onClose={handleCloseFilterMenu} 
+        onFilter={handleApplyFilter} 
+        users={users} 
+        projects={projects} 
+      />
     </div>
+  );
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/principal" element={<Principal />} />
+        <Route path="/" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 

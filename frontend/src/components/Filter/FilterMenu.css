@@ -1,48 +1,75 @@
 /* src/components/Filter/FilterMenu.css */
 
 .filter-menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .filter-menu-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-    max-width: 90%;
-  }
-  
-  .filter-menu-content h2 {
-    margin-top: 0;
-  }
-  
-  .filter-menu-content div {
-    margin-bottom: 10px;
-  }
-  
-  .filter-menu-content label {
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  .filter-menu-content select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .filter-menu-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-menu-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  max-width: 90%;
+}
+
+.filter-menu-content h2 {
+  margin-top: 0;
+  color: #2c3d4e;
+}
+
+.filter-menu-content div {
+  margin-bottom: 10px;
+}
+
+.filter-menu-content label {
+  display: block;
+  margin-bottom: 5px;
+  color: #2c3d4e;
+  font-weight: bold;
+}
+
+.filter-menu-content select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filter-menu-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.filter-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-button.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.filter-button.apply {
+  background-color: #00d084;
+  color: white;
+}
+
+.filter-button.cancel:hover {
+  background-color: #d32f2f;
+}
+
+.filter-button.apply:hover {
+  background-color: #00b074;
+}
