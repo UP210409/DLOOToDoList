@@ -19,6 +19,7 @@ import jakarta.validation.Valid;
 import java.util.*;
 
 import com.example.p02.model.Project;
+import com.example.p02.model.Task;
 
 @RestController
 @RequestMapping({"/projects"})
@@ -30,8 +31,14 @@ public class ProjectController {
         this.projectService = projectService;
     }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Project> getProjectById(@PathVariable Long id) {
+        Optional<Project> project = projectService.getpProjectById(id);
+        return project.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+    
     @Operation(summary = "Mostrar todos los proyectos")
-    @GetMapping({"/all"})
+    @GetMapping
     public ResponseEntity<List<Project>> getProjects(){
         return ResponseEntity.ok(projectService.getProjects());
     }

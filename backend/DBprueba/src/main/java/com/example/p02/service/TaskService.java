@@ -18,30 +18,36 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public List<Task> getTask() {
+    public List<Task> getTasks() {
         return taskRepository.findAll();
     }
 
     public Optional<Task> getTask(Long id) {
-        return taskRepository.findById(id);    }
-    
-    public void eliminar(Long id) {
+        return taskRepository.findById(id);
+    }
+
+    public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
 
-    public void saveTask(Task task) {
-        taskRepository.save(task);
+    public Task saveTask(Task task) {
+        return taskRepository.save(task);
     }
 
     public void editTask(Long id, Task task){
-       Optional<Task> optionalTask = taskRepository.findById(id);
+    //    Optional<Task> optionalTask = taskRepository.findById(id);
 
-       Task updateTask = optionalTask.get();
-       updateTask.setName(task.getName());
-       updateTask.setDescription(task.getDescription());
-       updateTask.setDueDate(task.getDueDate());
-       updateTask.setCreatedAt(task.getCreatedAt());
-       updateTask.setUpdatedAt(task.getUpdatedAt());
-       taskRepository.save(updateTask);
+    //    Task updateTask = optionalTask.get();
+    //    updateTask.setDescription(task.getDescription());
+    //    updateTask.setDueDate(task.getDueDate());
+    //    updateTask.setCreatedAt(task.getCreatedAt());
+    //    updateTask.setUpdatedAt(task.getUpdatedAt());
+    //    taskRepository.save(updateTask);
+
+    taskRepository.save(task);
+    }
+
+    public Optional<Task> getTaskById(Long id) {
+        return taskRepository.findById(id); 
     }
 }
