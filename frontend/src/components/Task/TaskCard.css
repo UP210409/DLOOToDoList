@@ -1,0 +1,54 @@
+/* src/components/Task/TaskCard.css */
+
+.task-card {
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 10px;
+    width: 100%; /* Asegúrate de que la tarjeta ocupe todo el ancho disponible */
+    box-sizing: border-box; /* Incluye padding y border en el ancho total */
+  }
+  
+  .task-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .task-card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .task-card-description {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+  .task-card-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .task-card .icons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .task-card .icons button {
+    margin-left: 5px;
+  }
+
+  .task-card.completed {
+    background-color: #f0f0f0; /* Color de fondo opacado para tareas completadas */
+    border: 1px solid #d3d3d3; /* Opcional: cambiar el color del borde */
+    opacity: 0.6; /* Opcional: opacar el recuadro */
+  }
+  
+  .task-card.completed .completed-task {
+    text-decoration: line-through; /* Tachado del nombre de la tarea */
+    color: #a0a0a0; /* Color de texto desactivado */
+  }

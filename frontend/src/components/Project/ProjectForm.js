@@ -5,22 +5,23 @@ import './ProjectForm.css';
 
 function ProjectForm({ isOpen, onClose, onSave }) {
   const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
 
   if (!isOpen) {
     return null;
   }
 
   const handleSave = () => {
-    const project = { name, description };
-    onSave(project);
-    onClose();
+    if (name.trim()) {
+      const project = { name };
+      onSave(project);
+      onClose();
+    }
   };
 
   return (
     <div className="project-form-overlay">
       <div className="project-form-content">
-        <h2>Dar de alta proyecto</h2>
+        <h2>Crear Proyecto:</h2> {/* Actualiza el título aquí */}
         <div>
           <label>Nombre:</label>
           <input 
@@ -30,17 +31,9 @@ function ProjectForm({ isOpen, onClose, onSave }) {
             placeholder="Nombre"
           />
         </div>
-        <div>
-          <label>Descripción:</label>
-          <textarea 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)} 
-            placeholder="Descripción"
-          />
-        </div>
         <div className="project-form-buttons">
-          <button onClick={onClose}>Cancelar</button>
-          <button onClick={handleSave}>Crear</button>
+          <button className="cancel-button" onClick={onClose}>Cancelar</button>
+          <button className="save-button" onClick={handleSave}>Crear</button>
         </div>
       </div>
     </div>
