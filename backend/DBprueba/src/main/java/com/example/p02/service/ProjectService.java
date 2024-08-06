@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.p02.model.Project;
+import com.example.p02.model.Task;
 import com.example.p02.repository.ProjectRepository;
 
 @Service
@@ -30,6 +31,10 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
+    public Optional<Project> getpProjectById(Long id) {
+        return projectRepository.findById(id); 
+    }
+
     public Project saveProject(Project project) {
         return projectRepository.save(project);
     }
@@ -38,4 +43,5 @@ public class ProjectService {
         project.setId(id);
         projectRepository.save(project);
     }
+
 }
