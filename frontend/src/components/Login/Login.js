@@ -3,16 +3,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-
-  const handleLogin = () => {
-    // lógica de autenticación
-    // Si la autenticación es exitosa:
-    navigate('/principal'); // Redirigir a la pantalla principal
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -40,6 +35,7 @@ const Login = () => {
     }
   };
 
+
   return (
     <div className="login-container">
       <div className="login-left">
@@ -52,19 +48,6 @@ const Login = () => {
       </div>
       <div className="login-right">
         <h2>Inicio de Sesión</h2>
-        <input 
-          type="email" 
-          placeholder="E-mail" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-        />
-        <input 
-          type="password" 
-          placeholder="Contraseña" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-        />
-        <button onClick={handleLogin}>Iniciar Sesión</button>
         <form onSubmit={handleSubmit}>
           <input
             type="email"
@@ -84,5 +67,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
