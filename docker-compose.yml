@@ -1,45 +1,37 @@
-version: '3.8'
+version: '3'
+
 services:
+
   frontend:
+
     build: frontend
+
     ports:
-      - "3000:${FRONTEND_PORT}"
-    depends_on:
-      - backend
-    environment:
-      VITE_API_URL: http://localhost:3000
+
+      - 3000:3000
+
+    volumes:
+      - ./frontend/src:/app/src
 
   backend:
+
     build: backend
+
     ports:
-      - "8080:${BACKEND_PORT}"
+
+      - 8080:8080
+
     depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_HOST: db
-    entrypoint: ["java", "-jar", "/app.jar"]
+      - db
 
   db:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    build: db/mysql-init
     ports:
-      - "3306:${MYSQL_PORT}"
+      - 3306:3306
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/mysql-init:/docker-entrypoint-initdb
       - mysql-data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "db"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
 
 volumes:
   mysql-data:
+    
