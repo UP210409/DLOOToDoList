@@ -1,4 +1,4 @@
-/*package com.example.p02.controller;
+package com.example.p02.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +64,4 @@ public class ProjectController {
           projectService.deleteProject(id);
     }
     
-}*/
+}

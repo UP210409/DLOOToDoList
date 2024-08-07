@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.p02.service.UserService;
 import jakarta.validation.Valid;
 import java.util.*;
+
+import com.example.p02.model.Task;
 import com.example.p02.model.User;
 
 @RestController
@@ -26,6 +28,12 @@ public class UserController {
 
     public UserController (@Autowired UserService userService){
         this.userService = userService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @GetMapping
@@ -50,8 +58,5 @@ public class UserController {
     public void deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
     }
-
-
-
 
 }
