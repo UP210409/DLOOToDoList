@@ -11,9 +11,11 @@ function ProjectForm({ isOpen, onClose, onSave }) {
   const handleSave = () => {
     if (name.trim()) {
       const project = { name };
-      // Aquí deberías hacer una petición al backend para crear el proyecto
-      onSave(project);
-      onClose();
+      if (onSave) {
+        onSave(project); // Llama a la función onSave pasada como prop
+      }
+      setName(''); // Limpia el campo de entrada
+      onClose(); // Cierra el formulario
     }
   };
 

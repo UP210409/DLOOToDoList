@@ -1,3 +1,4 @@
+// src/components/App/app.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Nav from '../Nav/Nav';
@@ -145,14 +146,25 @@ function App() {
     return 'siguienteSemana';
   };
 
-  const handleCreateProject = (project) => {
-    // Aquí deberías hacer una petición al backend para crear el proyecto
-    setProjects([...projects, project]);
+  const handleCreateProject = async (project) => {
+    try {
+      const response = await fetch('http://localhost:8080/projects/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(project),
+      });
+      const newProject = await response.json();
+      setProjects(prevProjects => [...prevProjects, newProject]);
+    } catch (error) {
+      console.error('Error creating project:', error);
+    }
   };
 
   const Principal = () => (
     <div className="app-container">
-      <Sidebar projects={projects} />
+      <Sidebar projects={projects} addProject={handleCreateProject} />
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
         <Main 
@@ -175,11 +187,12 @@ function App() {
         users={users} 
         projects={projects} 
       />
-      <ProjectForm 
+      {/* Puedes agregar ProjectForm aquí si necesitas abrirlo en el App */}
+      {/* <ProjectForm 
         isOpen={isModalOpen} 
         onClose={handleCloseModal} 
         onSave={handleCreateProject} 
-      />
+      /> */}
     </div>
   );
 
