@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import './TaskModal.css';
@@ -6,17 +6,29 @@ import './TaskModal.css';
 function TaskModal({ isOpen, onClose, onSave, task }) {
   const [taskName, setTaskName] = useState(task ? task.name : '');
   const [taskDescription, setTaskDescription] = useState(task ? task.description : '');
-  const [taskDate, setTaskDate] = useState(task ? new Date(task.date) : new Date());
-  const [taskUsers, setTaskUsers] = useState(task ? task.users : []);
-  const [taskProject, setTaskProject] = useState(task ? task.project : '');
+  const [taskDate, setTaskDate] = useState(task ? new Date(task.dueDate) : new Date());
+
+  useEffect(() => {
+    if (task) {
+      setTaskName(task.name);
+      setTaskDescription(task.description);
+      setTaskDate(new Date(task.dueDate));
+    }
+  }, [task]);
 
   const handleSave = () => {
-    onSave({ name: taskName, description: taskDescription, date: taskDate, users: taskUsers, project: taskProject, status: task ? task.status : 'hoy' });
+    const taskData = {
+      id: task ? task.id : null,
+      name: taskName,
+      description: taskDescription,
+      dueDate: taskDate.toISOString().split('T')[0], // Format as 'yyyy-MM-dd'
+      createdAt: task ? task.createdAt : new Date().toISOString().split('T')[0],
+      updatedAt: task ? task.updatedAt : new Date().toISOString().split('T')[0]
+    };
+    onSave(taskData);
     setTaskName('');
     setTaskDescription('');
     setTaskDate(new Date());
-    setTaskUsers([]);
-    setTaskProject('');
   };
 
   if (!isOpen) return null;
@@ -39,18 +51,7 @@ function TaskModal({ isOpen, onClose, onSave, task }) {
         <DatePicker
           selected={taskDate}
           onChange={(date) => setTaskDate(date)}
-        />
-        <input
-          type="text"
-          placeholder="Usuarios (separados por comas)"
-          value={taskUsers.join(', ')}
-          onChange={(e) => setTaskUsers(e.target.value.split(',').map(user => user.trim()))}
-        />
-        <input
-          type="text"
-          placeholder="Proyecto"
-          value={taskProject}
-          onChange={(e) => setTaskProject(e.target.value)}
+          dateFormat="yyyy-MM-dd" // Ensures format compatibility
         />
         <div className="modal-buttons">
           <button onClick={onClose} className="cancel-button">Cancelar</button>
