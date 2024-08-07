@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.p02.service.UserService;
 import jakarta.validation.Valid;
 import java.util.*;
+
+import com.example.p02.model.Task;
 import com.example.p02.model.User;
 
 @RestController
@@ -31,6 +33,12 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getUsers(){
         return ResponseEntity.ok(userService.getUsers());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @PutMapping({"/edit/{id}"})

@@ -35,14 +35,6 @@ public class TaskService {
     }
 
     public void editTask(Long id, Task task){
-    //    Optional<Task> optionalTask = taskRepository.findById(id);
-
-    //    Task updateTask = optionalTask.get();
-    //    updateTask.setDescription(task.getDescription());
-    //    updateTask.setDueDate(task.getDueDate());
-    //    updateTask.setCreatedAt(task.getCreatedAt());
-    //    updateTask.setUpdatedAt(task.getUpdatedAt());
-    //    taskRepository.save(updateTask);
 
     taskRepository.save(task);
     }

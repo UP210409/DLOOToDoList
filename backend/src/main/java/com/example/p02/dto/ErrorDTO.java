@@ -1,4 +1,4 @@
-/*package com.example.p02.dto;
+package com.example.p02.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -15,4 +15,4 @@ public class ErrorDTO {
     private String message;
     private Object details;
 
-}*/
+}
