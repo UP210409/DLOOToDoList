@@ -8,14 +8,37 @@ function ProjectForm({ isOpen, onClose, onSave }) {
     return null;
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (name.trim()) {
       const project = { name };
-      if (onSave) {
-        onSave(project); // Llama a la función onSave pasada como prop
+      try {
+        // Enviar el proyecto al backend
+        const response = await fetch('http://localhost:8080/projects/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(project),
+        });
+        
+        if (!response.ok) {
+          throw new Error('Error en la solicitud');
+        }
+
+        const data = await response.json();
+
+        // Llama a la función onSave pasada como prop
+        if (onSave) {
+          onSave(data);
+        }
+        
+        // Limpia el campo de entrada
+        setName('');
+        // Cierra el formulario
+        onClose();
+      } catch (error) {
+        console.error('Error al crear el proyecto:', error);
       }
-      setName(''); // Limpia el campo de entrada
-      onClose(); // Cierra el formulario
     }
   };
 
