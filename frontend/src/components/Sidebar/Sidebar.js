@@ -1,17 +1,11 @@
 // src/components/Sidebar/Sidebar.js
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import logo from './Logo_JMAbogados.png'; // Importa el logo
 import ProjectForm from '../Project/ProjectForm'; // Asegúrate de que la ruta es correcta
 
-function Sidebar() {
-  const [projects, setProjects] = useState([]);
+function Sidebar({ projects }) {
   const [isFormOpen, setIsFormOpen] = useState(false);
-
-  const handleCreateProject = (project) => {
-    setProjects([...projects, project.name]);
-  };
 
   const handleOpenForm = () => {
     setIsFormOpen(true);
@@ -20,6 +14,10 @@ function Sidebar() {
   const handleCloseForm = () => {
     setIsFormOpen(false);
   };
+
+  if (!projects || projects.length === 0) {
+    return <div>No projects available</div>;
+  }
 
   return (
     <div className="sidebar">
@@ -33,16 +31,17 @@ function Sidebar() {
       <div className="projects-list">
         <h3>Proyectos:</h3>
         <ul>
-          {projects.map((project, index) => (
-            <li key={index}>{project}</li>
+          {projects.map((project) => (
+            <li key={project.id}>{project.name}</li>
           ))}
         </ul>
       </div>
-      <ProjectForm 
-        isOpen={isFormOpen} 
-        onClose={handleCloseForm} 
-        onSave={handleCreateProject} 
-      />
+      {isFormOpen && (
+        <ProjectForm 
+          isOpen={isFormOpen} 
+          onClose={handleCloseForm} 
+        />
+      )}
     </div>
   );
 }

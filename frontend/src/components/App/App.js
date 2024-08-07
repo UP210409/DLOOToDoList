@@ -1,10 +1,9 @@
-// src/components/App/App.js
-
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Nav from '../Nav/Nav';
-import Sidebar from '../Sidebar/Sidebar'; 
+import Sidebar from '../Sidebar/Sidebar';
 import Project from '../Project/Project';
+import { ProjectForm } from '../Project';
 import Main from '../Main/Main';
 import TaskModal from '../Task/TaskModal';
 import FilterMenu from '../Filter/FilterMenu';
@@ -14,7 +13,7 @@ import './App.css';
 function App() {
   const [tasks, setTasks] = useState([]);
   const [users, setUsers] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]); // Initialize as an empty array
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
@@ -43,9 +42,10 @@ function App() {
     try {
       const response = await fetch('http://localhost:8080/users');
       const data = await response.json();
-      setUsers(data);
+      setUsers(Array.isArray(data) ? data : []); // Ensure the data is an array
     } catch (error) {
       console.error('Error fetching users:', error);
+      setUsers([]); // Set to an empty array on error
     }
   };
 
@@ -53,9 +53,10 @@ function App() {
     try {
       const response = await fetch('http://localhost:8080/projects');
       const data = await response.json();
-      setProjects(data);
+      setProjects(Array.isArray(data) ? data : []); // Ensure the data is an array
     } catch (error) {
       console.error('Error fetching projects:', error);
+      setProjects([]); // Set to an empty array on error
     }
   };
 
@@ -144,9 +145,14 @@ function App() {
     return 'siguienteSemana';
   };
 
+  const handleCreateProject = (project) => {
+    // Aquí deberías hacer una petición al backend para crear el proyecto
+    setProjects([...projects, project]);
+  };
+
   const Principal = () => (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar projects={projects} />
       <div className="main-content">
         <Nav onAddTask={handleAddTask} onFilterTasks={handleFilterTasks} />
         <Main 
@@ -168,6 +174,11 @@ function App() {
         onFilter={handleApplyFilter} 
         users={users} 
         projects={projects} 
+      />
+      <ProjectForm 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+        onSave={handleCreateProject} 
       />
     </div>
   );

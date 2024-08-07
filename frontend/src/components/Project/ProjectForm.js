@@ -1,5 +1,3 @@
-// src/components/Project/ProjectForm.js
-
 import React, { useState } from 'react';
 import './ProjectForm.css';
 
@@ -13,6 +11,7 @@ function ProjectForm({ isOpen, onClose, onSave }) {
   const handleSave = () => {
     if (name.trim()) {
       const project = { name };
+      // Aquí deberías hacer una petición al backend para crear el proyecto
       onSave(project);
       onClose();
     }
@@ -21,7 +20,7 @@ function ProjectForm({ isOpen, onClose, onSave }) {
   return (
     <div className="project-form-overlay">
       <div className="project-form-content">
-        <h2>Crear Proyecto:</h2> {/* Actualiza el título aquí */}
+        <h2>Crear Proyecto:</h2>
         <div>
           <label>Nombre:</label>
           <input 
