@@ -1,4 +1,4 @@
-/*package com.example.p02.controller;
+package com.example.p02.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.p02.service.ProjectService;
+
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 import java.util.*;
@@ -64,4 +66,4 @@ public class ProjectController {
           projectService.deleteProject(id);
     }
     
-}*/
+}
