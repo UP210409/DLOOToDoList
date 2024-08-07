@@ -98,14 +98,51 @@ function App() {
     setIsModalOpen(false);
   };
 
-  const handleSaveTask = (task) => {
-    const newStatus = determineStatus(task.dueDate);
-    setTasks([...tasks, { ...task, id: tasks.length + 1, completed: false, status: newStatus }]);
-    setIsModalOpen(false);
+  const handleSaveTask = async (task) => {
+    try {
+      if (task.id === null) {
+        // Crear nueva tarea
+        const response = await fetch('http://localhost:8080/tasks/save', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(task),
+        });
+        if (response.ok) {
+          const newTask = await response.json();
+          const newStatus = determineStatus(newTask.dueDate);
+          setTasks([...tasks, { ...newTask, status: newStatus }]);
+        } else {
+          console.error('Error creating task');
+        }
+      } else {
+        // Editar tarea existente
+        await fetch(`http://localhost:8080/tasks/edit/${task.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(task),
+        });
+        const updatedTasks = tasks.map(t => t.id === task.id ? { ...task, status: determineStatus(task.dueDate) } : t);
+        setTasks(updatedTasks);
+      }
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error('Error saving task:', error);
+    }
   };
 
-  const handleDeleteTask = (taskId) => {
-    setTasks(tasks.filter(task => task.id !== taskId));
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await fetch(`http://localhost:8080/tasks/delete/${taskId}`, {
+        method: 'DELETE',
+      });
+      setTasks(tasks.filter(task => task.id !== taskId));
+    } catch (error) {
+      console.error('Error deleting task:', error);
+    }
   };
 
   const handleCompleteTask = (taskId) => {
