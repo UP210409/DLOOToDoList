@@ -1,0 +1,28 @@
+# backend/Dockerfile
+
+# Utiliza la imagen de OpenJDK 22 con JDK slim
+FROM openjdk:22-jdk-slim
+
+# Establece el volumen /tmp para almacenar archivos temporales
+VOLUME /tmp
+
+# Expone el puerto 8080 para el tráfico HTTP
+EXPOSE 8080
+
+# Establece la variable JAR_FILE con la ruta del archivo JAR
+ARG JAR_FILE=build/libs/*.jar
+
+# Copia el archivo JAR en la raíz del contenedor con el nombre app.jar
+COPY ${JAR_FILE} app.jar
+
+# Instala el cliente de MySQL por defecto
+RUN apt-get update && apt-get install -y default-mysql-client
+
+# Crea un grupo y un usuario para Spring
+RUN addgroup --system spring && adduser --system spring --ingroup spring
+
+# Establece el usuario y grupo para la ejecución del contenedor
+USER spring:spring
+
+# Establece el punto de entrada para la ejecución del contenedor
+ENTRYPOINT ["java", "-jar", "/app.jar"]
