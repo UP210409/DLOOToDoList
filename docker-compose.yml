@@ -25,11 +25,11 @@ services:
       - db
 
   db:
-    build: db/mysql-init
+    build: db/mysql
     ports:
       - 3306:3306
     volumes:
-      - ./db/mysql-init:/docker-entrypoint-initdb
+      - ./db/mysql:/docker-entrypoint-initdb
       - mysql-data:/var/lib/mysql
 
 volumes:
