@@ -1,7 +1,7 @@
-/*package com.example.p02.config;
+package com.example.p02.config;
 import lombok.extern.slf4j.Slf4j;
 import com.example.p02.dto.ErrorDTO;
-import com.example.p02.exception.RuntimeException; //
+import com.example.p02.exception.RuntimeException; 
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -44,4 +44,4 @@ public class ErrorHandler {
         return new ErrorDTO("ERROR_UNKNOWN", "Ocurrió un error inesperado...", null);
     }
   
-}*/
+}
