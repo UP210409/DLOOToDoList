@@ -1,5 +1,10 @@
-CREATE DATABASE IF NOT EXISTS TASK2;
-use TASK2;
+CREATE DATABASE IF NOT EXISTS task2;
+
+grant alter, alter routine, create, create routine, create temporary tables, create view, delete, drop, event, execute, index, insert, lock tables, references, select, show view, trigger, update, grant option on `task2`.* to task2;
+
+grant alter, alter routine, create, create routine, create temporary tables, create view, delete, drop, event, index, insert, lock tables, select, show databases, show view, trigger, update, grant option on *.* to task2;
+
+use task2;
 
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS users (
@@ -32,7 +37,7 @@ CREATE TABLE IF NOT EXISTS tasks (
 );
 
 
-USE TASK2;
+USE task2;
 
 -- Disable safe updates mode if necessary
 -- SET SQL_SAFE_UPDATES = 0;
@@ -43,7 +48,7 @@ USE TASK2;
 -- DELETE FROM users;
 
 -- Insertar usuarios con IDs del 4 al 8
-INSERT INTO users (id, name, position, email, password) VALUES 
+INSERT INTO users (id, name, position, email, password) VALUES
 (4, 'Alice Johnson', 'Senior Lawyer', 'alice@jmabogados.com', 'password'),
 (5, 'Bob Smith', 'Junior Lawyer', 'bob@jmabogados.com', 'password'),
 (6, 'Carol White', 'Paralegal', 'carol@jmabogados.com', 'password'),
@@ -51,7 +56,7 @@ INSERT INTO users (id, name, position, email, password) VALUES
 (8, 'Eve Black', 'Consultant', 'eve@ejmabogados.com', 'password');
 
 -- Insertar proyectos
-INSERT INTO projects (id, name, description) VALUES 
+INSERT INTO projects (id, name, description) VALUES
 (1, 'Project Alpha', 'Description for Project Alpha'),
 (2, 'Project Beta', 'Description for Project Beta'),
 (3, 'Project Gamma', 'Description for Project Gamma'),
@@ -59,7 +64,7 @@ INSERT INTO projects (id, name, description) VALUES
 (5, 'Project Epsilon', 'Description for Project Epsilon');
 
 -- Insertar tareas con usuarios y proyectos asignados
-INSERT INTO tasks (user_id, project_id, name, description, due_date) VALUES 
+INSERT INTO tasks (user_id, project_id, name, description, due_date) VALUES
 (4, 1, 'Task 1', 'Description for Task 1', '2024-08-06'), -- Alice Johnson y Project Alpha
 (5, 2, 'Task 2', 'Description for Task 2', '2024-08-07'), -- Bob Smith y Project Beta
 (6, 3, 'Task 3', 'Description for Task 3', '2024-08-08'), -- Carol White y Project Gamma
