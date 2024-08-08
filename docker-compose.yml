@@ -1,37 +1,27 @@
-version: '3'
-
+version: '3.8'
 services:
-
   frontend:
-
     build: frontend
-
     ports:
-
       - 3000:3000
-
-    volumes:
-      - ./frontend/src:/app/src
-
   backend:
-
     build: backend
-
     ports:
-
       - 8080:8080
-
     depends_on:
       - db
-
   db:
-    build: db/mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: task2
+      MYSQL_DATABASE: task2
+      MYSQL_USER: task2
+      MYSQL_PASSWORD: task2
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
-      - ./db/mysql:/docker-entrypoint-initdb
+      - ./mysql-init:/docker-entrypoint-initdb.d
       - mysql-data:/var/lib/mysql
 
 volumes:
   mysql-data:
-    
