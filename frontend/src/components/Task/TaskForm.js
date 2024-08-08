@@ -67,55 +67,35 @@ function App() {
     }
   };
 
-  const fetchTaskUser = async (userId) => {
-    try {
-      const response = await fetch(`http://localhost:8080/users/${userId}`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return { name: 'Unknown User' }; // Fallback value
-    }
-  };
-
-  const fetchTaskProject = async (projectId) => {
-    try {
-      const response = await fetch(`http://localhost:8080/projects/${projectId}`);
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error('Error fetching project:', error);
-      return { name: 'Unknown Project' }; // Fallback value
-    }
-  };
-
+  
   const fetchTasksByPerson = async (personId) => {
     try {
-      const response = await fetch(`http://localhost:8080/tasks/user/${personId}`);
-      const data = await response.json();
-      const tasksWithStatus = data.map(task => ({
-        ...task,
-        status: determineStatus(task.dueDate)
-      }));
-      setTasks(tasksWithStatus);
+        const response = await fetch(`http://localhost:8080/tasks/user/${personId}`);
+        const data = await response.json();
+        const tasksWithStatus = data.map(task => ({
+            ...task,
+            status: determineStatus(task.dueDate)
+        }));
+        setTasks(tasksWithStatus);
     } catch (error) {
-      console.error('Error fetching tasks by person:', error);
+        console.error('Error fetching tasks by person:', error);
     }
-  };
+};
 
-  const fetchTasksByProject = async (projectId) => {
-    try {
+
+const fetchTasksByProject = async (projectId) => {
+  try {
       const response = await fetch(`http://localhost:8080/tasks/project/${projectId}`);
       const data = await response.json();
       const tasksWithStatus = data.map(task => ({
-        ...task,
-        status: determineStatus(task.dueDate),
+          ...task,
+          status: determineStatus(task.dueDate),
       }));
       setTasks(tasksWithStatus);
-    } catch (error) {
+  } catch (error) {
       console.error('Error fetching tasks by project:', error);
-    }
-  };
+  }
+};
 
   const handleAddTask = () => {
     setTaskToEdit(null);
