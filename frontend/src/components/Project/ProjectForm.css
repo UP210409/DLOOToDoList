@@ -1,15 +1,16 @@
 /* src/components/Project/ProjectForm.css */
 
 .project-form-overlay {
-  position: fixed;
+  position: fixed; /* Asegura que el overlay cubra toda la pantalla */
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000; /* Asegura que el overlay esté por encima de otros elementos */
 }
 
 .project-form-content {
@@ -18,6 +19,7 @@
   border-radius: 5px;
   width: 300px;
   max-width: 90%;
+  z-index: 1001; /* Asegura que el contenido del modal esté por encima del overlay */
 }
 
 .project-form-content h2 {

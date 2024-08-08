@@ -1,3 +1,4 @@
+/* src/components/Login/Login.css */
 :root {
   --primary-color: #2c3d4e; /* Azul oscuro */
   --secondary-color: #00d084; /* Verde claro */
@@ -81,21 +82,14 @@
   color: var(--text-color);
 }
 
-.login-right input {
+.login-right .MuiTextField-root {
   width: 100%;
-  padding: 10px;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
 }
 
-.login-right button {
-  padding: 10px 20px;
-  border: none;
-  background-color: var(--primary-color);
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
+.login-right .MuiButton-root {
+  width: 100%;
+  margin-top: 20px;
 }
 
 /* Media queries para pantallas más pequeñas */
@@ -134,14 +128,6 @@
   .login-right h2 {
     font-size: 18px;
   }
-
-  .login-right input {
-    padding: 8px;
-  }
-
-  .login-right button {
-    padding: 8px 16px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -164,13 +150,5 @@
 
   .login-right h2 {
     font-size: 16px;
-  }
-
-  .login-right input {
-    padding: 6px;
-  }
-
-  .login-right button {
-    padding: 6px 12px;
   }
 }

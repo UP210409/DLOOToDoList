@@ -1,16 +1,17 @@
-// src/components/Login/Login.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Typography, Snackbar, Alert } from '@mui/material';
 import './Login.css';
-
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault();
 
     const user = { email, password };
 
@@ -26,15 +27,20 @@ const Login = () => {
       if (response.ok) {
         const userId = await response.json();
         sessionStorage.setItem('userId', userId);
-        navigate('/principal'); // Redirect to the main screen
+        navigate('/principal');
       } else {
-        console.error("Invalid Credentials");
+        setError('Correo electrónico o contraseña incorrectos.');
+        setOpenSnackbar(true);
       }
     } catch (error) {
-      console.error("Error connecting to the Database: ", error);
+      setError('Error al conectar con la base de datos.');
+      setOpenSnackbar(true);
     }
   };
 
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
 
   return (
     <div className="login-container">
@@ -47,24 +53,42 @@ const Login = () => {
         </div>
       </div>
       <div className="login-right">
-        <h2>Inicio de Sesión</h2>
+        <Typography variant="h4">Inicio de Sesión</Typography>
         <form onSubmit={handleSubmit}>
-          <input
+          <TextField
+            label="E-mail"
             type="email"
-            placeholder="E-mail"
+            fullWidth
+            margin="normal"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
-          <input
+          <TextField
+            label="Contraseña"
             type="password"
-            placeholder="Contraseña"
+            fullWidth
+            margin="normal"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          <button type="submit">Iniciar Sesión</button>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            Iniciar Sesión
+          </Button>
         </form>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+        >
+          <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+            {error}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );
 };
+
 export default Login;

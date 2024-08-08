@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
+  position: relative; /* Asegura que los elementos hijos se posicionen en relación al contenedor */
 }
 
 .create-project-btn {
@@ -16,6 +17,7 @@
   color: white;
   cursor: pointer;
   margin-bottom: 20px;
+  position: relative; /* Asegura que el botón tenga un contexto de apilamiento adecuado */
 }
 
 .create-project-btn:hover {

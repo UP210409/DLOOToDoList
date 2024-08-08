@@ -1,11 +1,29 @@
-// src/components/Sidebar/Sidebar.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import logo from './Logo_JMAbogados.png'; // Importa el logo
 import ProjectForm from '../Project/ProjectForm'; // Asegúrate de que la ruta es correcta
 
-function Sidebar({ projects, setProjects }) {
+function Sidebar() {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    // Función para obtener los proyectos desde el backend al cargar el componente
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/projects');
+        if (!response.ok) {
+          throw new Error('Error fetching projects');
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    fetchProjects();
+  }, []); // El array vacío indica que se ejecuta solo al montar el componente
 
   const handleOpenForm = () => {
     setIsFormOpen(true);
@@ -31,10 +49,6 @@ function Sidebar({ projects, setProjects }) {
       })
       .catch(error => console.error('Error adding project:', error));
   };
-
-  if (!projects || projects.length === 0) {
-    return <div>No projects available</div>;
-  }
 
   return (
     <div className="sidebar">
