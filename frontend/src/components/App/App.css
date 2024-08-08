@@ -1,6 +1,6 @@
 :root {
   --primary-color: #2c3d4e; /* Azul oscuro */
-  --secondary-color: #00d084; /* Azul claro */
+  --secondary-color: #00d084; /* Verde claro */
   --background-color: #F5F5F5; /* Gris claro */
   --text-color: #333333; /* Gris oscuro */
 }
@@ -11,8 +11,10 @@
   background-color: var(--background-color);
   color: var(--text-color);
   margin: 0;
+  flex-direction: row;
 }
 
+/* Estilos para la barra lateral (Sidebar) */
 .sidebar {
   width: 250px;
   background-color: var(--primary-color);
@@ -21,11 +23,14 @@
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Estilos para el contenido principal */
 .main-content {
   flex: 1;
   padding: 20px;
+  overflow-y: auto;
 }
 
+/* Estilos para el header */
 .header {
   display: flex;
   align-items: center;
@@ -42,6 +47,47 @@
   color: white;
 }
 
-.App {
-  display: flex;
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    box-shadow: none;
+    position: relative;
+    height: auto;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header img {
+    height: 40px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+/* Media queries para dispositivos móviles más pequeños */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 18px;
+  }
+
+  .sidebar {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .main-content {
+    padding: 5px;
+  }
 }
