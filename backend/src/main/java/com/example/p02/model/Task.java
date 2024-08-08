@@ -37,6 +37,12 @@ public class Task {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate updatedAt;
 
+    @Column(name = "user_id")
+    private Integer user_id;
+
+    @Column(name = "project_id")
+    private Integer project_id;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDate.now();
