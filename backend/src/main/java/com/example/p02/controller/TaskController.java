@@ -42,23 +42,23 @@ public class TaskController {
         return task.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Task>> getTasksByUserId(@PathVariable Long userId) {
-        List<Task> tasks = taskService.getTasksByUserId(userId);
-        if (tasks.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(tasks);
-    }
+    // @GetMapping("/user/{userId}")
+    // public ResponseEntity<List<Task>> getTasksByUserId(@PathVariable Long userId) {
+    //     List<Task> tasks = taskService.getTasksByUserId(userId);
+    //     if (tasks.isEmpty()) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //     }
+    //     return ResponseEntity.ok(tasks);
+    // }
 
-    @GetMapping("/project/{projectId}")
-    public ResponseEntity<List<Task>> getTasksByProjectId(@PathVariable Long projectId) {
-        List<Task> tasks = taskService.getTasksByProjectId(projectId);
-        if (tasks.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-        return ResponseEntity.ok(tasks);
-    }
+    // @GetMapping("/project/{projectId}")
+    // public ResponseEntity<List<Task>> getTasksByProjectId(@PathVariable Long projectId) {
+    //     List<Task> tasks = taskService.getTasksByProjectId(projectId);
+    //     if (tasks.isEmpty()) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    //     }
+    //     return ResponseEntity.ok(tasks);
+    // }
 
     @PostMapping({"/save"})
     @ResponseStatus(HttpStatus.CREATED)

@@ -11,6 +11,6 @@ import com.example.p02.model.Task;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    List<Task> findByUserId(Long userId);
-    List<Task> findByProjectId(Long projectId);
+    // List<Task> findByUserId(Long userId);
+    // List<Task> findByProjectId(Long projectId);
 }
