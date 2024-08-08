@@ -1,9 +1,9 @@
 # frontend/Dockerfile
-FROM node:20.11.0-alpine3.19
-RUN addgroup front && adduser -S -G front front
-USER front
-WORKDIR /app/
-COPY --chown=front package*.json .
+FROM node:14
+WORKDIR /app
+COPY package*.json ./
 RUN npm install
-COPY --chown=front . .
-CMD ["npm", "run", "start"]
+COPY . .
+RUN npm run build
+FROM nginx:stable-alpine
+COPY --from=0 /app/build /usr/share/nginx/html
