@@ -11,5 +11,4 @@ public class DTOtask {
     private LocalDateTime fechaVencimiento;
     private String estado;
     private Set<Long> usuarioIds;
-
 }

@@ -29,11 +29,17 @@ function App() {
     try {
       const response = await fetch('http://localhost:8080/tasks');
       const data = await response.json();
-      const tasksWithStatus = data.map(task => ({
-        ...task,
-        status: determineStatus(task.dueDate)
+      const tasksWithDetails = await Promise.all(data.map(async task => {
+        const user = await fetchTaskUser(task.user_id);
+        const project = await fetchTaskProject(task.project_id);
+        return {
+          ...task,
+          user: user.name,
+          project: project.name,
+          status: determineStatus(task.dueDate)
+        };
       }));
-      setTasks(tasksWithStatus);
+      setTasks(tasksWithDetails);
     } catch (error) {
       console.error('Error fetching tasks:', error);
     }
@@ -61,6 +67,28 @@ function App() {
     }
   };
 
+  const fetchTaskUser = async (userId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/users/${userId}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching user:', error);
+      return { name: 'Unknown User' }; // Fallback value
+    }
+  };
+
+  const fetchTaskProject = async (projectId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/projects/${projectId}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching project:', error);
+      return { name: 'Unknown Project' }; // Fallback value
+    }
+  };
+
   const fetchTasksByPerson = async (personId) => {
     try {
       const response = await fetch(`http://localhost:8080/tasks/user/${personId}`);
@@ -81,7 +109,7 @@ function App() {
       const data = await response.json();
       const tasksWithStatus = data.map(task => ({
         ...task,
-        status: determineStatus(task.dueDate)
+        status: determineStatus(task.dueDate),
       }));
       setTasks(tasksWithStatus);
     } catch (error) {
