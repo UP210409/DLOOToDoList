@@ -117,6 +117,22 @@ function App() {
     }
   };
 
+  
+  const fetchTasksByProjectANDPerson = async (personId,projectId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/tasks/userproject/${projectId}/{userId}?userId=${personId}`);
+      const data = await response.json();
+      const tasksWithStatus = data.map(task => ({
+        ...task,
+        status: determineStatus(task.dueDate),
+      }));
+      setTasks(tasksWithStatus);
+    } catch (error) {
+      console.error('Error fetching tasks by project:', error);
+    }
+  };
+
+
   const handleAddTask = () => {
     setTaskToEdit(null);
     setIsModalOpen(true);
@@ -192,11 +208,13 @@ function App() {
   };
 
   const handleApplyFilter = (filters) => {
-    if (filters.personId) {
+    if (filters.personId && filters.projectId) {
+      fetchTasksByProjectANDPerson(filters.personId, filters.projectId)
+    } else if (filters.personId) {
       fetchTasksByPerson(filters.personId);
     } else if (filters.projectId) {
       fetchTasksByProject(filters.projectId);
-    } else {
+    }else{
       fetchTasks();
     }
   };
