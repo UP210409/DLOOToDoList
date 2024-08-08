@@ -1,17 +1,16 @@
-// src/components/Task/TaskCard.js
 import React from 'react';
 import { Card, CardContent, Typography, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import './TaskCard.css'; // Asegúrate de que el archivo CSS esté importado
+import './TaskCard.css';
 
 const TaskCard = ({ task, onDelete, onEdit, onComplete }) => {
   return (
     <Card 
       variant="outlined" 
-      className={`task-card ${task.completed ? 'completed' : ''}`} // Aplicar clase condicional
+      className={`task-card ${task.completed ? 'completed' : ''}`} 
       style={{ marginBottom: '10px' }}
     >
       <CardContent>
@@ -26,10 +25,10 @@ const TaskCard = ({ task, onDelete, onEdit, onComplete }) => {
           {task.description}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Usuario: {task.user}
+          Usuario: {task.userName || 'Desconocido'}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Proyecto: {task.project}
+          Proyecto: {task.projectName || 'Desconocido'}
         </Typography>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
           <IconButton color="primary" onClick={() => onComplete(task.id)}>
