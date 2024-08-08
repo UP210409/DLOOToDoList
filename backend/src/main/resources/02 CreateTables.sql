@@ -1,5 +1,4 @@
-Base de datos: task
-use TASK;
+use TASK2;
 
 -- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS users (
@@ -20,27 +19,13 @@ CREATE TABLE IF NOT EXISTS projects (
 -- Tabla de tareas
 CREATE TABLE IF NOT EXISTS tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    project_id INT,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     due_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- Tabla de asociación usuario-tarea (muchos a muchos)
-CREATE TABLE IF NOT EXISTS user_tasks (
-    user_id INT,
-    task_id INT,
-    PRIMARY KEY (user_id, task_id),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
-);
-
--- Tabla de asociación proyecto-tarea (muchos a muchos)
-CREATE TABLE IF NOT EXISTS project_tasks (
-    project_id INT,
-    task_id INT,
-    PRIMARY KEY (project_id, task_id),
-    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
-    FOREIGN KEY (task_id) REFERENCES tasks(id) ON DELETE CASCADE
+    FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE
 );
